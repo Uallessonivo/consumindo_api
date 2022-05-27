@@ -53,6 +53,7 @@ defmodule ConsumindoApi.MixProject do
       {:excoveralls, "~> 0.10", only: :test},
       {:tesla, "~> 1.4.0"},
       {:hackney, "~> 1.17"},
+      {:bypass, "~> 2.1", only: :test},
       {:plug_cowboy, "~> 2.5"}
     ]
   end
