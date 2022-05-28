@@ -54,7 +54,9 @@ defmodule ConsumindoApi.MixProject do
       {:tesla, "~> 1.4.0"},
       {:hackney, "~> 1.17"},
       {:bypass, "~> 2.1", only: :test},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:pbkdf2_elixir, "~> 2.0"},
+      {:guardian, "~> 2.0"}
     ]
   end
 

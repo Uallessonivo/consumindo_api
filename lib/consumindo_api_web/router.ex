@@ -9,6 +9,7 @@ defmodule ConsumindoApiWeb.Router do
     pipe_through :api
 
     get "/repositories/:username", RepositoriesController, :show
+    post "/users/", UsersController, :create
   end
 
   # Enables LiveDashboard only for development
