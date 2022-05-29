@@ -1,15 +1,28 @@
 defmodule ConsumindoApiWeb.Router do
   use ConsumindoApiWeb, :router
 
+  alias ConsumindoApiWeb.Plugs.UUIDChecker
+
   pipeline :api do
     plug :accepts, ["json"]
+    plug UUIDChecker
+  end
+
+  pipeline :auth do
+    plug ConsumindoApiWeb.Auth.Pipeline
+  end
+
+  scope "/api", ConsumindoApiWeb do
+    pipe_through [:api, :auth]
+
+    get "/repositories/:username", RepositoriesController, :show
   end
 
   scope "/api", ConsumindoApiWeb do
     pipe_through :api
 
-    get "/repositories/:username", RepositoriesController, :show
     post "/users/", UsersController, :create
+    post "/users/login", UsersController, :login
   end
 
   # Enables LiveDashboard only for development

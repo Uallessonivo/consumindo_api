@@ -13,9 +13,15 @@ config :consumindo_api,
 config :consumindo_api, ConsumindoApi.Repos.Get,
   get_repositories_adapter: ConsumindoApi.Github.Client
 
+config :consumindo_api, ConsumindoApi.Repo, migration_primary_key: [type: :binary_id]
+
 config :consumindo_api, ConsumindoApiWeb.Auth.Guardian,
   issuer: "consumindo_api",
   secret_key: "z4HuMYeHs4gdrdVVYiTt8ceFgPFyMq831GtoI4+91Tb+7aOaw4enuANOxXTD2i"
+
+config :consumindo_api, ConsumindoApiWeb.Auth.Pipeline,
+  module: ConsumindoApiWeb.Auth.Guardian,
+  error_handler: ConsumindoApiWeb.Auth.ErrorHandler
 
 # Configures the endpoint
 config :consumindo_api, ConsumindoApiWeb.Endpoint,

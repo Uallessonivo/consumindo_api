@@ -3,9 +3,8 @@ defmodule ConsumindoApiWeb.UsersController do
 
   alias ConsumindoApi.Users.User
   alias ConsumindoApiWeb.Auth.Guardian
-  alias ConsumindoApiWeb.FallbackController
 
-  action_fallback(FallbackController)
+  action_fallback ConsumindoApiWeb.FallbackController
 
   def create(conn, params) do
     with {:ok, %User{} = user} <- ConsumindoApi.create_user(params),
@@ -21,6 +20,14 @@ defmodule ConsumindoApiWeb.UsersController do
       conn
       |> put_status(:ok)
       |> render("user.json", user: user)
+    end
+  end
+
+  def login(conn, params) do
+    with {:ok, token} <- Guardian.authenticate(params) do
+      conn
+      |> put_status(:ok)
+      |> render("login.json", token: token)
     end
   end
 end
