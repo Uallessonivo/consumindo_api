@@ -16,11 +16,13 @@ defmodule ConsumindoApiWeb.Router do
     pipe_through [:api, :auth]
 
     get "/repositories/:username", RepositoriesController, :show
+    post "/users/me/update", UsersController, :update
   end
 
   scope "/api", ConsumindoApiWeb do
     pipe_through :api
 
+    get "/users/me/:id", UsersController, :show
     post "/users/", UsersController, :create
     post "/users/login", UsersController, :login
   end

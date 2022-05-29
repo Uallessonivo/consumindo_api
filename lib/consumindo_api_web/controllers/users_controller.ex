@@ -3,6 +3,7 @@ defmodule ConsumindoApiWeb.UsersController do
 
   alias ConsumindoApi.Users.User
   alias ConsumindoApiWeb.Auth.Guardian
+  alias ConsumindoApiWeb.Auth.RefreshToken
 
   action_fallback ConsumindoApiWeb.FallbackController
 
@@ -15,11 +16,20 @@ defmodule ConsumindoApiWeb.UsersController do
     end
   end
 
+  def update(conn, params) do
+    with {:ok, %User{} = user} <- ConsumindoApi.update_user(params),
+         token <- RefreshToken.refresh_token(conn) do
+      conn
+      |> put_status(:ok)
+      |> render("user.json", token: token, user: user)
+    end
+  end
+
   def show(conn, %{"id" => id}) do
     with {:ok, %User{} = user} <- ConsumindoApi.get_user(id) do
       conn
       |> put_status(:ok)
-      |> render("user.json", user: user)
+      |> render("user.json", token: "token", user: user)
     end
   end
 

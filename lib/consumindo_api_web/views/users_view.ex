@@ -11,8 +11,9 @@ defmodule ConsumindoApiWeb.UsersView do
     }
   end
 
-  def render("user.json", %{user: %User{} = user}) do
+  def render("user.json", %{token: token, user: %User{} = user}) do
     %{
+      token: token,
       user: user
     }
   end
